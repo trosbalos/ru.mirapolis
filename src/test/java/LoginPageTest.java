@@ -153,7 +153,7 @@ public class LoginPageTest extends BaseTest {
                 .inputPasswordField(password)
                 .eyeButtonClick()
                 .copyPasswordField();
-        Assertions.assertEquals(password, ((getBufferedString())));
+        Assertions.assertEquals(password, getBufferedString());
     }
 
     @Test
@@ -261,6 +261,25 @@ public class LoginPageTest extends BaseTest {
                 .forgotPasswordClick()
                 .submitButtonClick();
         Assertions.assertTrue(new LoginPage(driver).wrongLoginOrEmailAlertDisabled());
+    }
+    @Test
+    @Order(24)
+    @Description("Login field accept symbols, digits, Russian language")
+    public void textLoginFieldValidationTest() {
+       new LoginPage(driver)
+                .inputUsernameField("123!@#раздва")
+                .usernameFieldCopy();
+        Assertions.assertEquals("123!@#раздва",getBufferedString());
+    }
+    @Test
+    @Order(25)
+    @Description("Password field accept symbols, digits, Russian language")
+    public void textPasswordFieldValidationTest() {
+       new LoginPage(driver)
+                .inputPasswordField("456$%^пять")
+                .eyeButtonClick()
+                .copyPasswordField();
+        Assertions.assertEquals("456$%^пять",getBufferedString());
     }
 
 }

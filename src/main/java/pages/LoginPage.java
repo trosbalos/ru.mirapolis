@@ -69,6 +69,14 @@ public class LoginPage extends AbstractPage {
         takeScreenshot(driver);
         return this;
     }
+    @Step
+    public LoginPage usernameFieldCopy() {
+        LoginPage page = new LoginPage(driver);
+        page.userNameField.sendKeys(Keys.CONTROL, "a");
+        page.userNameField.sendKeys(Keys.CONTROL, "c");
+        takeScreenshot(driver);
+        return this;
+    }
 
     @Step
     public LoginPage loginOrEmailInput(String name) {

@@ -16,7 +16,6 @@ public class Data {
     String spacePassword = "   1P73BP4Za   ";
     String failedAuthAlertText = "Неверные данные для авторизации.";
     String failedAuthAlertText2 = "Неверные данные для авторизации";
-    String symbols = "!@#$%^&*()";
 
     String getBufferedString() {
         String result = "";
