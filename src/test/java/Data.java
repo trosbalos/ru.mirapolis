@@ -10,10 +10,10 @@ public class Data {
     String email1 = "efomina@company.ru";
     String spaceEmail = "  efomina@company.ru  ";
     String email2 = "efomina2@company.ru";
-    String password = "1P73BP4Za";
+    String password = "1P73BP4Z";
     String spaceLogin = "  fominaelena  ";
     String wrongLogin = "qwe123!@#";
-    String spacePassword = "   1P73BP4Za   ";
+    String spacePassword = "   1P73BP4Z   ";
     String failedAuthAlertText = "Неверные данные для авторизации.";
     String failedAuthAlertText2 = "Неверные данные для авторизации";
 

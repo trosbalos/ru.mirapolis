@@ -95,8 +95,8 @@ public class LoginPageTest extends BaseTest {
 
     @Test
     @Order(9)
-    @Description("Empty password")
-    @Disabled
+    @Description(" Password with spaces")
+    // Тест падает т.к.у переменной вызывает trim()
     public void loginSpacePassTest() {
         try {
             new LoginPage(driver).login(login, spacePassword);
@@ -110,6 +110,12 @@ public class LoginPageTest extends BaseTest {
     @Test
     @Order(10)
     @Description("Password to upper case")
+    /*
+     Тест должен проходить, но падает т.к. пароль изначально не содержит символов в нижнем регистре.
+     Можно было залогиниться с паролем логином 1 и паролем 1 (а такая учетная запись есть),
+     изменить пароль на другой, с символом в нижнем регистре, но это бы было не корректно.
+    */
+
     public void loginUpperCasePasswordTest() {
         try {
             new LoginPage(driver).login(login, password.toUpperCase());
@@ -222,7 +228,6 @@ public class LoginPageTest extends BaseTest {
     @Test
     @Order(20)
     @Description("Reset password with space login")
-    @Disabled
     public void passwordResetSpaceLoginTest() {
         new LoginPage(driver)
                 .forgotPasswordClick()
@@ -234,7 +239,6 @@ public class LoginPageTest extends BaseTest {
     @Test
     @Order(21)
     @Description("Reset password with space email")
-    @Disabled
     public void passwordResetSpaceEmailTest() {
         new LoginPage(driver)
                 .forgotPasswordClick()
