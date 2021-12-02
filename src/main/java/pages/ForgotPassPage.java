@@ -26,6 +26,19 @@ public class ForgotPassPage extends AbstractPage {
     @FindBy(xpath = "//a[@class=\"mira-page-forgot-password-link\"]")
     private WebElement backToLoginPageButton;
 
+    @Step
+    public LoginPage backToLoginPageButtonClick() {
+        backToLoginPageButton.click();
+        takeScreenshot(driver);
+        return new LoginPage(driver);
+    }
+
+    @Step
+    public LoginPage logoClick() {
+        logo.click();
+        takeScreenshot(driver);
+        return new LoginPage(driver);
+    }
 
     @Step
     public ForgotPassPage forgotPasswordClick() {
@@ -62,19 +75,6 @@ public class ForgotPassPage extends AbstractPage {
 
         takeScreenshot(driver);
         return wrongLoginOrEmailAlert.isDisplayed();
-    }
-
-    @Step
-    public LoginPage logoClick() {
-        logo.click();
-        takeScreenshot(driver);
-        return new LoginPage(driver);
-    }
-    @Step
-    public LoginPage backToLoginPageButtonClick() {
-        backToLoginPageButton.click();
-        takeScreenshot(driver);
-        return new LoginPage(driver);
     }
 
 

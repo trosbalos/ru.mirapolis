@@ -6,8 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-
 public class LoginPage extends AbstractPage {
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
+
     @FindBy(xpath = "//input[@name=\"user\"]")
     private WebElement userNameField;
     @FindBy(xpath = "//input[@name=\"password\"]")
@@ -23,18 +26,21 @@ public class LoginPage extends AbstractPage {
     @FindBy(xpath = "//img[@src=\"Logo/Login\"]")
     private WebElement logo;
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
-    }
 
 
     @Step
-    public LoginPage login(String user, String password) {
-        new LoginPage(driver)
-                .inputUsernameField(user)
-                .inputPasswordField(password)
-                .submitButtonClick();
-        return this;
+    public MainPage login(String user, String password) {
+        inputUsernameField(user);
+        inputPasswordField(password);
+        submitButtonClick();
+        return new MainPage(driver);
+    }
+
+    @Step
+    public ForgotPassPage forgotPasswordClick() {
+        forgotPassword.click();
+        takeScreenshot(driver);
+        return new ForgotPassPage(driver);
     }
 
     @Step
@@ -74,24 +80,14 @@ public class LoginPage extends AbstractPage {
         page.passwordField.sendKeys(Keys.CONTROL, "c");
         takeScreenshot(driver);
         return this;
-
     }
 
     @Step
     public LoginPage submitButtonClick() {
-        submitButton.click();
         takeScreenshot(driver);
+        submitButton.click();
         return this;
     }
-
-
-    @Step
-    public ForgotPassPage forgotPasswordClick() {
-        forgotPassword.click();
-        takeScreenshot(driver);
-        return new ForgotPassPage(driver);
-    }
-
 
     @Step
     public LoginPage eyeButtonClick() {
@@ -99,6 +95,4 @@ public class LoginPage extends AbstractPage {
         takeScreenshot(driver);
         return this;
     }
-
-
 }

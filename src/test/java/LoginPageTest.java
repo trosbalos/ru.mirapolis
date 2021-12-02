@@ -1,6 +1,5 @@
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.UnhandledAlertException;
 import pages.ForgotPassPage;
 import pages.LoginPage;
 import pages.MainPage;
@@ -12,8 +11,8 @@ public class LoginPageTest extends BaseTest {
     @Order(1)
     @Description("Successful login")
     public void loginTest() {
-        MainPage page = new MainPage(driver)
-        .login(login, password);
+        MainPage page = new LoginPage(driver)
+                 .login(login, password);
         implicitlyWait(10);
         Assertions.assertTrue(page.avatarDisplayed());
     }
@@ -22,7 +21,7 @@ public class LoginPageTest extends BaseTest {
     @Order(2)
     @Description("Login with spaces in login")
     public void loginSpaceTrimTest() {
-        MainPage page = new MainPage(driver)
+        MainPage page = new LoginPage(driver)
                 .login(spaceLogin, password);
         implicitlyWait(10);
         Assertions.assertTrue(page.avatarDisplayed());
@@ -32,7 +31,7 @@ public class LoginPageTest extends BaseTest {
     @Order(3)
     @Description(" Login to upper case")
     public void loginSpaceUpperCaseTest() {
-        MainPage page = new MainPage(driver)
+        MainPage page = new LoginPage(driver)
                 .login(login.toUpperCase(), password);
         implicitlyWait(10);
         Assertions.assertTrue(page.avatarDisplayed());
@@ -42,7 +41,7 @@ public class LoginPageTest extends BaseTest {
     @Order(4)
     @Description(" Login to lower case")
     public void loginLowerCaseTest() {
-        MainPage page = new MainPage(driver)
+        MainPage page = new LoginPage(driver)
                 .login(login.toLowerCase(), password);
         implicitlyWait(10);
         Assertions.assertTrue(page.avatarDisplayed());
@@ -52,39 +51,35 @@ public class LoginPageTest extends BaseTest {
     @Order(5)
     @Description("Empty login")
     public void loginEmptyLoginTest() {
-        LoginPage page = new LoginPage(driver);
-        try {
-            page.login("", password);
-        } catch (UnhandledAlertException e) {
-            Assertions.assertEquals(failedAuthAlertText, e.getAlertText());
-        }
-        Assertions.assertTrue(page.loginPageDisplayed());
+        MainPage page = new LoginPage(driver)
+            .login("", password);
+            Assertions.assertEquals(page.getAlertText(),failedAuthAlertText);
+    }
+    @Test
+    @Order(5)
+    @Description("Empty login")
+    public void loginEmptyLoginTest2() {
+        MainPage page = new LoginPage(driver)
+            .login("", password);
+        Assertions.assertEquals(page.getAlertText(),failedAuthAlertText);
     }
 
     @Test
     @Order(6)
     @Description("Wrong password")
     public void wrongPasswordTest() {
-        LoginPage page = new LoginPage(driver);
-        try {
-            page.login(login, "password");
-        } catch (UnhandledAlertException e) {
-            Assertions.assertEquals(failedAuthAlertText2, e.getAlertText());
-        }
-        Assertions.assertTrue(page.loginPageDisplayed());
+        MainPage page = new LoginPage(driver)
+            .login(login, "password");
+            Assertions.assertEquals(page.getAlertText(),failedAuthAlertText2);
     }
 
     @Test
     @Order(7)
     @Description("Wrong login")
     public void wrongLoginTest() {
-        LoginPage page = new LoginPage(driver);
-        try {
-            page.login("login", password);
-        } catch (UnhandledAlertException e) {
-            Assertions.assertEquals(failedAuthAlertText2, e.getAlertText());
-        }
-        Assertions.assertTrue(page.loginPageDisplayed());
+        MainPage page = new LoginPage(driver)
+            .login("login", password);
+            Assertions.assertEquals(page.getAlertText(),failedAuthAlertText2);
     }
 
 
@@ -92,14 +87,9 @@ public class LoginPageTest extends BaseTest {
     @Order(8)
     @Description("Empty password")
     public void loginEmptyPassTest() {
-        LoginPage page = new LoginPage(driver);
-        try {
-            page.login(login, "");
-
-        } catch (UnhandledAlertException e) {
-            Assertions.assertEquals(failedAuthAlertText, e.getAlertText());
-        }
-        Assertions.assertTrue(page.loginPageDisplayed());
+        MainPage page = new LoginPage(driver)
+                    .login(login, "");
+            Assertions.assertEquals(page.getAlertText(),failedAuthAlertText);
     }
 
     @Test
@@ -107,14 +97,9 @@ public class LoginPageTest extends BaseTest {
     @Description(" Password with spaces")
     // Тест падает т.к.у переменной вызывает trim()
     public void loginSpacePassTest() {
-        LoginPage page = new LoginPage(driver);
-        try {
-            page.login(login, spacePassword);
-
-        } catch (UnhandledAlertException e) {
-            Assertions.assertEquals(failedAuthAlertText, e.getAlertText());
-        }
-        Assertions.assertTrue(page.loginPageDisplayed());
+        MainPage page = new LoginPage(driver)
+                .login(login, spacePassword);
+        Assertions.assertEquals(page.getAlertText(),failedAuthAlertText);
     }
 
     @Test
@@ -127,27 +112,18 @@ public class LoginPageTest extends BaseTest {
     */
 
     public void loginUpperCasePasswordTest() {
-        LoginPage page = new LoginPage(driver);
-        try {
-            page.login(login, password.toUpperCase());
-        } catch (UnhandledAlertException e) {
-            Assertions.assertEquals(failedAuthAlertText2, e.getAlertText());
-        }
-        Assertions.assertTrue(page.loginPageDisplayed());
+        MainPage page = new LoginPage(driver)
+                  .login(login, password.toUpperCase());
+        Assertions.assertEquals(page.getAlertText(),failedAuthAlertText2);
     }
 
     @Test
     @Order(11)
     @Description("Password to lower case")
     public void loginLowerCasePasswordTest() {
-        LoginPage page = new LoginPage(driver);
-        try {
-            page.login(login, password.toLowerCase());
-
-        } catch (UnhandledAlertException e) {
-            Assertions.assertEquals(failedAuthAlertText2, e.getAlertText());
-        }
-        Assertions.assertTrue(page.loginPageDisplayed());
+        MainPage page = new LoginPage(driver)
+                 .login(login, password.toLowerCase());
+        Assertions.assertEquals(page.getAlertText(),failedAuthAlertText2);
 
     }
 
@@ -159,7 +135,7 @@ public class LoginPageTest extends BaseTest {
                 .inputUsernameField(login)
                 .inputPasswordField(password)
                 .copyPasswordField();
-        Assertions.assertNotEquals(password, ((getBufferedString())));
+        Assertions.assertNotEquals(password, getBufferedString());
     }
 
     @Test
