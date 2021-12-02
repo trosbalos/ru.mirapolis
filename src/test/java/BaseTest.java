@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest extends Data {
-    public WebDriver driver;
+     WebDriver driver;
 
     @BeforeAll
     static void beforeAll() {

@@ -10,7 +10,7 @@ import java.io.ByteArrayInputStream;
 
 public abstract class AbstractPage {
 
-    protected WebDriver driver;
+     WebDriver driver;
 
     public AbstractPage(WebDriver driver) {
         this.driver = driver;

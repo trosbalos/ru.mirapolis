@@ -18,14 +18,6 @@ public class LoginPage extends AbstractPage {
     private WebElement eyeButton;
     @FindBy(xpath = "//a[@class=\"mira-default-login-page-link\"]")
     private WebElement forgotPassword;
-    @FindBy(xpath = "//a[@class=\"mira-page-forgot-password-link\"]")
-    private WebElement backToLoginPageButton;
-    @FindBy(xpath = "//input[@name=\"loginOrEmail\"]")
-    private WebElement loginOrEmailInput;
-    @FindBy(xpath = "//div[text()=\"Пользователь с таким именем не найден.\"]")
-    private WebElement wrongLoginOrEmailAlert;
-    @FindBy(xpath = "//div[@class=\"success\"]")
-    private WebElement loginOrEmailSuccess;
     @FindBy(xpath = "//div[@class=\"mira-page-login\"]")
     private WebElement loginPage;
     @FindBy(xpath = "//img[@src=\"Logo/Login\"]")
@@ -33,6 +25,16 @@ public class LoginPage extends AbstractPage {
 
     public LoginPage(WebDriver driver) {
         super(driver);
+    }
+
+
+    @Step
+    public LoginPage login(String user, String password) {
+        new LoginPage(driver)
+                .inputUsernameField(user)
+                .inputPasswordField(password)
+                .submitButtonClick();
+        return this;
     }
 
     @Step
@@ -43,44 +45,17 @@ public class LoginPage extends AbstractPage {
     }
 
     @Step
-    public boolean loginOrEmailInputDisabled() {
-
-        takeScreenshot(driver);
-        return loginOrEmailInput.isDisplayed();
-    }
-
-    @Step
-    public boolean wrongLoginOrEmailAlertDisabled() {
-
-        takeScreenshot(driver);
-        return wrongLoginOrEmailAlert.isDisplayed();
-    }
-
-    @Step
-    public boolean loginOrEmailSuccessDisabled() {
-
-        takeScreenshot(driver);
-        return loginOrEmailSuccess.isDisplayed();
-    }
-
-    @Step
     public LoginPage inputUsernameField(String name) {
         userNameField.sendKeys(name);
         takeScreenshot(driver);
         return this;
     }
+
     @Step
     public LoginPage usernameFieldCopy() {
         LoginPage page = new LoginPage(driver);
         page.userNameField.sendKeys(Keys.CONTROL, "a");
         page.userNameField.sendKeys(Keys.CONTROL, "c");
-        takeScreenshot(driver);
-        return this;
-    }
-
-    @Step
-    public LoginPage loginOrEmailInput(String name) {
-        loginOrEmailInput.sendKeys(name);
         takeScreenshot(driver);
         return this;
     }
@@ -109,26 +84,14 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
-    @Step
-    public LoginPage logoClick() {
-        logo.click();
-        takeScreenshot(driver);
-        return this;
-    }
 
     @Step
-    public LoginPage forgotPasswordClick() {
+    public ForgotPassPage forgotPasswordClick() {
         forgotPassword.click();
         takeScreenshot(driver);
-        return this;
+        return new ForgotPassPage(driver);
     }
 
-    @Step
-    public LoginPage backToLoginPageButtonClick() {
-        backToLoginPageButton.click();
-        takeScreenshot(driver);
-        return this;
-    }
 
     @Step
     public LoginPage eyeButtonClick() {
@@ -137,12 +100,5 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
-    @Step
-    public LoginPage login(String user, String password) {
-        new LoginPage(driver)
-                .inputUsernameField(user)
-                .inputPasswordField(password)
-                .submitButtonClick();
-        return this;
-    }
+
 }

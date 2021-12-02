@@ -20,4 +20,12 @@ public class MainPage extends AbstractPage {
         takeScreenshot(driver);
         return avatar.isDisplayed();
     }
+    @Step
+    public MainPage login(String user, String password) {
+        new LoginPage(driver)
+                .inputUsernameField(user)
+                .inputPasswordField(password)
+                .submitButtonClick();
+        return this;
+    }
 }
