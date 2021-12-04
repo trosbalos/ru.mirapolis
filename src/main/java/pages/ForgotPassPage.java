@@ -1,18 +1,12 @@
 package pages;
 
-import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ForgotPassPage extends AbstractPage {
 
-    public ForgotPassPage(WebDriver driver) {
-        super(driver);
-    }
 
-    @FindBy(xpath = "//a[@class=\"mira-default-login-page-link\"]")
-    private WebElement forgotPassword;
     @FindBy(xpath = "//input[@name=\"loginOrEmail\"]")
     private WebElement loginOrEmailInput;
     @FindBy(xpath = "//button[@type=\"submit\"]")
@@ -26,57 +20,46 @@ public class ForgotPassPage extends AbstractPage {
     @FindBy(xpath = "//a[@class=\"mira-page-forgot-password-link\"]")
     private WebElement backToLoginPageButton;
 
-    @Step
+    public ForgotPassPage(WebDriver driver) {
+        super(driver);
+    }
+
+
     public LoginPage backToLoginPageButtonClick() {
         backToLoginPageButton.click();
-        takeScreenshot(driver);
         return new LoginPage(driver);
     }
 
-    @Step
+
     public LoginPage logoClick() {
         logo.click();
-        takeScreenshot(driver);
         return new LoginPage(driver);
     }
 
-    @Step
-    public ForgotPassPage forgotPasswordClick() {
-        forgotPassword.click();
-        takeScreenshot(driver);
-        return this;
-    }
-    @Step
-    public boolean loginOrEmailInputDisplayed() {
 
-        takeScreenshot(driver);
+    public boolean loginOrEmailInputDisplayed() {
         return loginOrEmailInput.isDisplayed();
     }
-    @Step
+
+
     public ForgotPassPage loginOrEmailInput(String name) {
         loginOrEmailInput.sendKeys(name);
-        takeScreenshot(driver);
         return this;
     }
-    @Step
+
+
     public ForgotPassPage submitButtonClick() {
         submitButton.click();
-        takeScreenshot(driver);
         return this;
     }
-    @Step
-    public boolean loginOrEmailSuccessDisplayed() {
 
-        takeScreenshot(driver);
+
+    public boolean loginOrEmailSuccessDisplayed() {
         return loginOrEmailSuccess.isDisplayed();
     }
-    @Step
-    public boolean wrongLoginOrEmailAlertDisabled() {
 
-        takeScreenshot(driver);
+
+    public boolean wrongLoginOrEmailAlertDisabled() {
         return wrongLoginOrEmailAlert.isDisplayed();
     }
-
-
-
 }

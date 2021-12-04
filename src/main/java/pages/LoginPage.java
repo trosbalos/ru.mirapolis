@@ -1,17 +1,14 @@
 package pages;
 
-import io.qameta.allure.Step;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends AbstractPage {
-    public LoginPage(WebDriver driver) {
-        super(driver);
-    }
 
-    @FindBy(xpath = "//input[@name=\"user\"]")
+    @FindBy(css = "input.mira-default-login-page-text-input")
     private WebElement userNameField;
     @FindBy(xpath = "//input[@name=\"password\"]")
     private WebElement passwordField;
@@ -26,9 +23,10 @@ public class LoginPage extends AbstractPage {
     @FindBy(xpath = "//img[@src=\"Logo/Login\"]")
     private WebElement logo;
 
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
 
-
-    @Step
     public MainPage login(String user, String password) {
         inputUsernameField(user);
         inputPasswordField(password);
@@ -36,63 +34,55 @@ public class LoginPage extends AbstractPage {
         return new MainPage(driver);
     }
 
-    @Step
     public ForgotPassPage forgotPasswordClick() {
         forgotPassword.click();
-        takeScreenshot(driver);
         return new ForgotPassPage(driver);
     }
 
-    @Step
     public boolean loginPageDisplayed() {
-
-        takeScreenshot(driver);
         return loginPage.isDisplayed();
     }
 
-    @Step
+
     public LoginPage inputUsernameField(String name) {
         userNameField.sendKeys(name);
-        takeScreenshot(driver);
         return this;
     }
 
-    @Step
-    public LoginPage usernameFieldCopy() {
-        LoginPage page = new LoginPage(driver);
-        page.userNameField.sendKeys(Keys.CONTROL, "a");
-        page.userNameField.sendKeys(Keys.CONTROL, "c");
-        takeScreenshot(driver);
-        return this;
+
+    public String usernameFieldCopy() {
+        userNameField.sendKeys(Keys.CONTROL, "a");
+        userNameField.sendKeys(Keys.CONTROL, "c");
+        return getBufferedString();
     }
 
-    @Step
+
     public LoginPage inputPasswordField(String password) {
         passwordField.sendKeys(password);
-        takeScreenshot(driver);
         return this;
     }
 
-    @Step
-    public LoginPage copyPasswordField() {
-        LoginPage page = new LoginPage(driver);
-        page.passwordField.sendKeys(Keys.CONTROL, "a");
-        page.passwordField.sendKeys(Keys.CONTROL, "c");
-        takeScreenshot(driver);
-        return this;
+    public String copyPasswordField() {
+        passwordField.sendKeys(Keys.CONTROL, "a");
+        passwordField.sendKeys(Keys.CONTROL, "c");
+        return getBufferedString();
     }
 
-    @Step
+
+    public String copyPasswordField2() {
+        return passwordField.getAttribute("value");
+    }
+
+
     public LoginPage submitButtonClick() {
-        takeScreenshot(driver);
         submitButton.click();
         return this;
     }
 
-    @Step
+
     public LoginPage eyeButtonClick() {
         eyeButton.click();
-        takeScreenshot(driver);
         return this;
     }
+
 }

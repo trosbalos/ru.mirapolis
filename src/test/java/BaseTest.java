@@ -1,44 +1,44 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
-public class BaseTest extends Data {
-     WebDriver driver;
 
-    @BeforeAll
-    static void beforeAll() {
-        WebDriverManager.chromedriver().setup();
-    }
+public class BaseTest extends TestDataProvider {
 
-    void implicitlyWait(long seconds) {
-        driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
-    }
+    WebDriver driver;
 
-    @BeforeEach
+    @BeforeClass
     void setup() throws IOException {
+        System.getProperties().load(ClassLoader.getSystemResourceAsStream("config.properties"));
+    }
+
+    @BeforeMethod
+    void beforeEach()  {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--start-maximized");
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(options);
-        System.getProperties().load(ClassLoader.getSystemResourceAsStream("config.properties"));
-        driver.get(System.getProperty("site.url"));
+        driver.get(System.getProperty("url"));
     }
 
-    @AfterEach
-    void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+    @AfterMethod
+    void closeDriver() {
+        driver.close();
+    }
+
+    @AfterClass
+    void quitDriver() {
+        driver.quit();
     }
 }
